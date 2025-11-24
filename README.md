@@ -14,7 +14,10 @@
 
 This repository showcases two **complete applications** built entirely from **single prompts** using Claude Opus 4.5 in Cursor. No iterations. No back-and-forth. Just one prompt, and boom—fully functional apps with animations, physics, sound effects, and beautiful UIs.
 
-These aren't toy examples. These are production-ready applications that demonstrate the cutting edge of AI-assisted development.
+<div align="center">
+  <img src="./images/arcade-simulator.gif" alt="Arcade Simulator Demo" width="45%" />
+  <img src="./images/image-brick-voxelizer.gif" alt="Image Brick Voxelizer Demo" width="45%" />
+</div>
 
 ## 📦 What's Inside
 
