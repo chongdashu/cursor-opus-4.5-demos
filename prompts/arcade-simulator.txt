@@ -1,0 +1,1 @@
+Build me an arcade game machine simulator that will run on a web page. Ensure that it looks aesthetically in theme and pleasing and has several different mini games. Make sure that the overall page looks visually appealing, and that all the games can be played using the keyboard.

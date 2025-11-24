@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b35"/>
+      <stop offset="100%" style="stop-color:#f7c744"/>
+    </linearGradient>
+  </defs>
+  <!-- LEGO brick base -->
+  <rect x="4" y="12" width="24" height="16" rx="2" fill="url(#grad)"/>
+  <!-- Studs -->
+  <circle cx="10" cy="10" r="4" fill="url(#grad)"/>
+  <circle cx="22" cy="10" r="4" fill="url(#grad)"/>
+  <!-- Highlights -->
+  <circle cx="10" cy="9" r="1.5" fill="#fff" opacity="0.3"/>
+  <circle cx="22" cy="9" r="1.5" fill="#fff" opacity="0.3"/>
+</svg>
+

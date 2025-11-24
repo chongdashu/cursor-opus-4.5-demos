@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>LEGO Voxelizer</title>
+  <meta name="description" content="Transform your images into interactive 3D LEGO voxel art">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Three.js Canvas Container -->
+    <div id="canvas-container"></div>
+    
+    <!-- Upload UI -->
+    <div id="upload-overlay" class="overlay visible">
+      <div class="upload-zone" id="upload-zone">
+        <div class="upload-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17,8 12,3 7,8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <h2>Drop your image here</h2>
+        <p>or click to browse</p>
+        <input type="file" id="file-input" accept="image/*" hidden>
+        <div class="supported-formats">Supports PNG, JPG, WebP</div>
+      </div>
+    </div>
+    
+    <!-- Loading Indicator -->
+    <div id="loading-overlay" class="overlay">
+      <div class="loader">
+        <div class="loader-brick"></div>
+        <div class="loader-brick"></div>
+        <div class="loader-brick"></div>
+        <div class="loader-brick"></div>
+      </div>
+      <p class="loading-text">Building your LEGO masterpiece...</p>
+    </div>
+    
+    <!-- Controls Hint -->
+    <div id="controls-hint" class="controls-hint hidden">
+      <div class="hint-item">
+        <span class="hint-key">Drag</span>
+        <span class="hint-action">Rotate</span>
+      </div>
+      <div class="hint-divider"></div>
+      <div class="hint-item">
+        <span class="hint-key">Scroll</span>
+        <span class="hint-action">Zoom</span>
+      </div>
+      <div class="hint-divider"></div>
+      <div class="hint-item">
+        <span class="hint-key">Space</span>
+        <span class="hint-action">Explode</span>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div id="action-buttons" class="action-buttons hidden">
+      <button id="reset-btn" class="action-btn" title="Upload New Image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17,8 12,3 7,8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <span>New Image</span>
+      </button>
+    </div>
+    
+    <!-- Title -->
+    <div id="title" class="title">
+      <h1>LEGO<span>Voxelizer</span></h1>
+    </div>
+  </div>
+  
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

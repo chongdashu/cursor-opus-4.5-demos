@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIXEL PALACE - Arcade Machine Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="starfield">
+        <div class="stars"></div>
+        <div class="stars stars-2"></div>
+        <div class="stars stars-3"></div>
+    </div>
+
+    <!-- Main title -->
+    <header class="arcade-header">
+        <h1 class="neon-title">
+            <span class="flicker">PIXEL</span> PALACE
+        </h1>
+        <p class="subtitle">INSERT KEYBOARD TO PLAY</p>
+    </header>
+
+    <!-- Arcade Cabinet -->
+    <div class="arcade-cabinet">
+        <!-- Cabinet top with marquee -->
+        <div class="cabinet-top">
+            <div class="marquee">
+                <div class="marquee-light left"></div>
+                <span class="marquee-text">SELECT YOUR GAME</span>
+                <div class="marquee-light right"></div>
+            </div>
+        </div>
+
+        <!-- Main screen area -->
+        <div class="cabinet-screen-frame">
+            <div class="screen-bezel">
+                <!-- CRT effects overlay -->
+                <div class="crt-effects">
+                    <div class="scanlines"></div>
+                    <div class="crt-glow"></div>
+                </div>
+                
+                <!-- Game canvas -->
+                <canvas id="gameCanvas" width="400" height="500"></canvas>
+                
+                <!-- Menu overlay -->
+                <div id="menuOverlay" class="menu-overlay">
+                    <h2 class="menu-title">GAME SELECT</h2>
+                    <ul class="game-list">
+                        <li class="game-item selected" data-game="snake">
+                            <span class="game-icon">🐍</span>
+                            <span class="game-name">SNAKE</span>
+                        </li>
+                        <li class="game-item" data-game="breakout">
+                            <span class="game-icon">🧱</span>
+                            <span class="game-name">BREAKOUT</span>
+                        </li>
+                        <li class="game-item" data-game="invaders">
+                            <span class="game-icon">👾</span>
+                            <span class="game-name">SPACE INVADERS</span>
+                        </li>
+                        <li class="game-item" data-game="tetris">
+                            <span class="game-icon">🟦</span>
+                            <span class="game-name">TETRIS</span>
+                        </li>
+                    </ul>
+                    <p class="menu-instructions">↑↓ SELECT • ENTER START</p>
+                </div>
+
+                <!-- Instructions overlay -->
+                <div id="instructionsOverlay" class="instructions-overlay hidden">
+                    <h2 class="instructions-title" id="instructionsTitle">GAME</h2>
+                    <div class="instructions-content" id="instructionsContent"></div>
+                    <p class="instructions-prompt">PRESS ENTER TO START</p>
+                    <p class="instructions-back">ESC TO GO BACK</p>
+                </div>
+
+                <!-- Game over overlay -->
+                <div id="gameOverOverlay" class="game-over-overlay hidden">
+                    <h2 class="game-over-title">GAME OVER</h2>
+                    <p class="final-score">SCORE: <span id="finalScore">0</span></p>
+                    <p class="high-score">HIGH SCORE: <span id="highScoreDisplay">0</span></p>
+                    <p class="game-over-prompt">ENTER RESTART • ESC MENU</p>
+                </div>
+
+                <!-- Pause overlay -->
+                <div id="pauseOverlay" class="pause-overlay hidden">
+                    <h2 class="pause-title">PAUSED</h2>
+                    <p class="pause-prompt">PRESS P TO RESUME</p>
+                    <p class="pause-back">ESC TO QUIT</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Control panel -->
+        <div class="cabinet-controls">
+            <div class="control-panel">
+                <!-- Joystick area -->
+                <div class="joystick-area">
+                    <div class="joystick-base">
+                        <div class="joystick-stick"></div>
+                    </div>
+                    <span class="control-label">ARROW KEYS</span>
+                </div>
+                
+                <!-- Buttons area -->
+                <div class="buttons-area">
+                    <div class="button-row">
+                        <div class="arcade-button red">
+                            <span>A</span>
+                        </div>
+                        <div class="arcade-button blue">
+                            <span>B</span>
+                        </div>
+                    </div>
+                    <span class="control-label">SPACE / ENTER</span>
+                </div>
+            </div>
+
+            <!-- Coin slot -->
+            <div class="coin-slot">
+                <div class="coin-slot-inner">
+                    <div class="slot"></div>
+                </div>
+                <span class="coin-label">FREE PLAY</span>
+            </div>
+        </div>
+
+        <!-- Speaker grills -->
+        <div class="cabinet-speakers">
+            <div class="speaker-grill left">
+                <div class="grill-lines"></div>
+            </div>
+            <div class="speaker-grill right">
+                <div class="grill-lines"></div>
+            </div>
+        </div>
+
+        <!-- Cabinet base -->
+        <div class="cabinet-base"></div>
+    </div>
+
+    <!-- Sound toggle -->
+    <button id="soundToggle" class="sound-toggle" title="Toggle Sound">
+        <span class="sound-on">🔊</span>
+        <span class="sound-off hidden">🔇</span>
+    </button>
+
+    <!-- Score display -->
+    <div class="score-display">
+        <div class="score-item">
+            <span class="score-label">SCORE</span>
+            <span class="score-value" id="currentScore">0</span>
+        </div>
+        <div class="score-item">
+            <span class="score-label">HIGH</span>
+            <span class="score-value" id="currentHighScore">0</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/snake.js"></script>
+    <script src="js/breakout.js"></script>
+    <script src="js/invaders.js"></script>
+    <script src="js/tetris.js"></script>
+</body>
+</html>

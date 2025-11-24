@@ -1,0 +1,834 @@
+/* ========================================
+   PIXEL PALACE - Arcade Machine Simulator
+   80s Neon Arcade Aesthetic
+   ======================================== */
+
+/* CSS Variables */
+:root {
+    --neon-cyan: #00ffff;
+    --neon-magenta: #ff00ff;
+    --neon-yellow: #ffff00;
+    --neon-green: #00ff41;
+    --neon-orange: #ff6600;
+    --neon-pink: #ff1493;
+    
+    --cabinet-dark: #1a1a2e;
+    --cabinet-mid: #16213e;
+    --cabinet-light: #0f3460;
+    --cabinet-accent: #e94560;
+    
+    --screen-bg: #0a0a0a;
+    --screen-glow: rgba(0, 255, 255, 0.3);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    
+    --font-arcade: 'Press Start 2P', cursive;
+}
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0a1a2e 100%);
+    font-family: var(--font-arcade);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ========================================
+   ANIMATED STARFIELD BACKGROUND
+   ======================================== */
+.starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, var(--neon-cyan), transparent),
+        radial-gradient(2px 2px at 40px 70px, var(--neon-magenta), transparent),
+        radial-gradient(1px 1px at 90px 40px, white, transparent),
+        radial-gradient(2px 2px at 160px 120px, var(--neon-yellow), transparent),
+        radial-gradient(1px 1px at 230px 80px, white, transparent),
+        radial-gradient(2px 2px at 300px 150px, var(--neon-cyan), transparent),
+        radial-gradient(1px 1px at 350px 200px, var(--neon-magenta), transparent),
+        radial-gradient(2px 2px at 420px 60px, white, transparent),
+        radial-gradient(1px 1px at 480px 180px, var(--neon-yellow), transparent),
+        radial-gradient(2px 2px at 550px 100px, var(--neon-cyan), transparent);
+    background-size: 600px 300px;
+    animation: twinkle 8s ease-in-out infinite;
+}
+
+.stars-2 {
+    background-image: 
+        radial-gradient(1px 1px at 100px 50px, var(--neon-pink), transparent),
+        radial-gradient(2px 2px at 200px 150px, white, transparent),
+        radial-gradient(1px 1px at 300px 100px, var(--neon-cyan), transparent),
+        radial-gradient(2px 2px at 400px 200px, var(--neon-magenta), transparent),
+        radial-gradient(1px 1px at 500px 50px, var(--neon-yellow), transparent);
+    background-size: 550px 250px;
+    animation: twinkle 12s ease-in-out infinite reverse;
+    opacity: 0.7;
+}
+
+.stars-3 {
+    background-image: 
+        radial-gradient(1px 1px at 50px 100px, white, transparent),
+        radial-gradient(1px 1px at 150px 200px, var(--neon-cyan), transparent),
+        radial-gradient(1px 1px at 250px 50px, var(--neon-magenta), transparent),
+        radial-gradient(1px 1px at 350px 150px, white, transparent),
+        radial-gradient(1px 1px at 450px 100px, var(--neon-yellow), transparent);
+    background-size: 500px 220px;
+    animation: twinkle 15s ease-in-out infinite;
+    opacity: 0.5;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* ========================================
+   HEADER & TITLE
+   ======================================== */
+.arcade-header {
+    text-align: center;
+    margin-bottom: 30px;
+    z-index: 10;
+}
+
+.neon-title {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    letter-spacing: 0.2em;
+    text-shadow: 
+        0 0 5px var(--neon-cyan),
+        0 0 10px var(--neon-cyan),
+        0 0 20px var(--neon-cyan),
+        0 0 40px var(--neon-cyan),
+        0 0 80px var(--neon-magenta);
+    animation: neonPulse 2s ease-in-out infinite;
+}
+
+.neon-title .flicker {
+    animation: flicker 3s linear infinite;
+    color: var(--neon-magenta);
+    text-shadow: 
+        0 0 5px var(--neon-magenta),
+        0 0 10px var(--neon-magenta),
+        0 0 20px var(--neon-magenta),
+        0 0 40px var(--neon-magenta);
+}
+
+@keyframes neonPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        opacity: 0.6;
+    }
+}
+
+.subtitle {
+    font-size: clamp(0.5rem, 2vw, 0.8rem);
+    color: var(--neon-yellow);
+    margin-top: 15px;
+    letter-spacing: 0.3em;
+    text-shadow: 0 0 10px var(--neon-yellow);
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* ========================================
+   ARCADE CABINET
+   ======================================== */
+.arcade-cabinet {
+    position: relative;
+    width: clamp(320px, 90vw, 500px);
+    perspective: 1000px;
+    z-index: 10;
+}
+
+/* Cabinet Top / Marquee */
+.cabinet-top {
+    background: linear-gradient(180deg, var(--cabinet-light) 0%, var(--cabinet-dark) 100%);
+    border-radius: 20px 20px 0 0;
+    padding: 15px;
+    border: 3px solid var(--cabinet-accent);
+    border-bottom: none;
+    position: relative;
+}
+
+.marquee {
+    background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+    border-radius: 10px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.marquee-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: marqueeLights 1s ease-in-out infinite alternate;
+}
+
+.marquee-light.left {
+    background: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+}
+
+.marquee-light.right {
+    background: var(--neon-magenta);
+    box-shadow: 0 0 10px var(--neon-magenta), 0 0 20px var(--neon-magenta);
+    animation-delay: 0.5s;
+}
+
+@keyframes marqueeLights {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.2); opacity: 1; }
+}
+
+.marquee-text {
+    font-size: clamp(0.6rem, 2.5vw, 1rem);
+    color: var(--neon-yellow);
+    text-shadow: 
+        0 0 5px var(--neon-yellow),
+        0 0 10px var(--neon-yellow);
+    letter-spacing: 0.1em;
+}
+
+/* Screen Frame */
+.cabinet-screen-frame {
+    background: linear-gradient(180deg, var(--cabinet-dark) 0%, var(--cabinet-mid) 50%, var(--cabinet-dark) 100%);
+    padding: 20px;
+    border-left: 3px solid var(--cabinet-accent);
+    border-right: 3px solid var(--cabinet-accent);
+}
+
+.screen-bezel {
+    background: #0a0a0a;
+    border-radius: 15px;
+    padding: 15px;
+    position: relative;
+    box-shadow: 
+        inset 0 0 50px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(0, 255, 255, 0.2),
+        0 0 60px rgba(255, 0, 255, 0.1);
+    overflow: hidden;
+}
+
+/* CRT Effects */
+.crt-effects {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    pointer-events: none;
+    z-index: 100;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    animation: scanlineMove 0.1s linear infinite;
+}
+
+@keyframes scanlineMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(2px); }
+}
+
+.crt-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        rgba(0, 0, 0, 0.2) 70%,
+        rgba(0, 0, 0, 0.5) 100%
+    );
+    box-shadow: inset 0 0 100px rgba(0, 255, 255, 0.05);
+}
+
+/* Game Canvas */
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--screen-bg);
+    border-radius: 5px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* ========================================
+   MENU & OVERLAYS
+   ======================================== */
+.menu-overlay,
+.instructions-overlay,
+.game-over-overlay,
+.pause-overlay {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 50;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.menu-title,
+.instructions-title,
+.game-over-title,
+.pause-title {
+    font-size: clamp(0.8rem, 3vw, 1.2rem);
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+    margin-bottom: 30px;
+    letter-spacing: 0.1em;
+}
+
+/* Game List */
+.game-list {
+    list-style: none;
+    width: 100%;
+    max-width: 280px;
+}
+
+.game-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.game-item:hover,
+.game-item.selected {
+    background: rgba(0, 255, 255, 0.1);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.game-item.selected {
+    animation: selectedPulse 1s ease-in-out infinite;
+}
+
+@keyframes selectedPulse {
+    0%, 100% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(0, 255, 255, 0.6); }
+}
+
+.game-icon {
+    font-size: 1.5rem;
+}
+
+.game-name {
+    font-size: clamp(0.5rem, 2vw, 0.7rem);
+    letter-spacing: 0.1em;
+}
+
+.menu-instructions {
+    font-size: clamp(0.4rem, 1.5vw, 0.6rem);
+    color: var(--text-secondary);
+    margin-top: 30px;
+    letter-spacing: 0.1em;
+}
+
+/* Instructions Overlay */
+.instructions-content {
+    text-align: center;
+    line-height: 2.5;
+    font-size: clamp(0.4rem, 1.5vw, 0.6rem);
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.instructions-content .key {
+    display: inline-block;
+    background: var(--cabinet-light);
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 0 5px;
+    color: var(--neon-yellow);
+    border: 1px solid var(--neon-yellow);
+}
+
+.instructions-prompt,
+.game-over-prompt,
+.pause-prompt {
+    font-size: clamp(0.4rem, 1.5vw, 0.55rem);
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green);
+    animation: blink 1s step-end infinite;
+    margin-top: 20px;
+}
+
+.instructions-back,
+.pause-back {
+    font-size: clamp(0.35rem, 1.2vw, 0.5rem);
+    color: var(--text-secondary);
+    margin-top: 10px;
+}
+
+/* Game Over Overlay */
+.game-over-title {
+    color: var(--cabinet-accent);
+    text-shadow: 0 0 10px var(--cabinet-accent);
+    animation: gameOverFlash 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes gameOverFlash {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.final-score,
+.high-score {
+    font-size: clamp(0.5rem, 2vw, 0.7rem);
+    margin: 10px 0;
+}
+
+.final-score {
+    color: var(--neon-yellow);
+    text-shadow: 0 0 10px var(--neon-yellow);
+}
+
+.high-score {
+    color: var(--neon-magenta);
+    text-shadow: 0 0 10px var(--neon-magenta);
+}
+
+/* Pause Overlay */
+.pause-title {
+    color: var(--neon-orange);
+    text-shadow: 0 0 10px var(--neon-orange);
+}
+
+/* ========================================
+   CONTROL PANEL
+   ======================================== */
+.cabinet-controls {
+    background: linear-gradient(180deg, var(--cabinet-mid) 0%, var(--cabinet-dark) 100%);
+    padding: 25px 20px;
+    border-left: 3px solid var(--cabinet-accent);
+    border-right: 3px solid var(--cabinet-accent);
+}
+
+.control-panel {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Joystick */
+.joystick-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.joystick-base {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #333 0%, #1a1a1a 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        inset 0 5px 15px rgba(0, 0, 0, 0.8),
+        0 5px 15px rgba(0, 0, 0, 0.5);
+    border: 3px solid #444;
+}
+
+.joystick-stick {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #666 0%, #333 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.5),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.3);
+    border: 2px solid #555;
+    transition: transform 0.1s ease;
+}
+
+.joystick-stick.up { transform: translateY(-5px); }
+.joystick-stick.down { transform: translateY(5px); }
+.joystick-stick.left { transform: translateX(-5px); }
+.joystick-stick.right { transform: translateX(5px); }
+
+.control-label {
+    font-size: 0.5rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+}
+
+/* Arcade Buttons */
+.buttons-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.button-row {
+    display: flex;
+    gap: 15px;
+}
+
+.arcade-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-family: var(--font-arcade);
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+}
+
+.arcade-button.red {
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+    box-shadow: 
+        0 6px 0 #990000,
+        0 8px 15px rgba(0, 0, 0, 0.5),
+        inset 0 2px 10px rgba(255, 255, 255, 0.3);
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
+.arcade-button.blue {
+    background: linear-gradient(135deg, #4444ff 0%, #0000cc 100%);
+    box-shadow: 
+        0 6px 0 #000099,
+        0 8px 15px rgba(0, 0, 0, 0.5),
+        inset 0 2px 10px rgba(255, 255, 255, 0.3);
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 0, 255, 0.8);
+}
+
+.arcade-button:active,
+.arcade-button.pressed {
+    transform: translateY(4px);
+    box-shadow: 
+        0 2px 0 #990000,
+        0 4px 10px rgba(0, 0, 0, 0.5),
+        inset 0 2px 10px rgba(255, 255, 255, 0.3);
+}
+
+.arcade-button.blue:active,
+.arcade-button.blue.pressed {
+    box-shadow: 
+        0 2px 0 #000099,
+        0 4px 10px rgba(0, 0, 0, 0.5),
+        inset 0 2px 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Coin Slot */
+.coin-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.coin-slot-inner {
+    width: 60px;
+    height: 35px;
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #444;
+    box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.8);
+}
+
+.slot {
+    width: 35px;
+    height: 4px;
+    background: #0a0a0a;
+    border-radius: 2px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.coin-label {
+    font-size: 0.5rem;
+    color: var(--neon-green);
+    text-shadow: 0 0 5px var(--neon-green);
+    letter-spacing: 0.1em;
+}
+
+/* Speaker Grills */
+.cabinet-speakers {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: var(--cabinet-dark);
+    border-left: 3px solid var(--cabinet-accent);
+    border-right: 3px solid var(--cabinet-accent);
+}
+
+.speaker-grill {
+    width: 45%;
+    height: 40px;
+    background: #1a1a1a;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 2px solid #333;
+}
+
+.grill-lines {
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        #0a0a0a 0px,
+        #0a0a0a 3px,
+        #222 3px,
+        #222 6px
+    );
+}
+
+/* Cabinet Base */
+.cabinet-base {
+    height: 30px;
+    background: linear-gradient(180deg, var(--cabinet-dark) 0%, #0a0a0a 100%);
+    border-radius: 0 0 15px 15px;
+    border: 3px solid var(--cabinet-accent);
+    border-top: none;
+}
+
+/* ========================================
+   SOUND TOGGLE
+   ======================================== */
+.sound-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--cabinet-dark);
+    border: 2px solid var(--neon-cyan);
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.sound-toggle:hover {
+    background: var(--cabinet-mid);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+}
+
+.sound-toggle .hidden {
+    display: none;
+}
+
+/* ========================================
+   SCORE DISPLAY
+   ======================================== */
+.score-display {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.score-item {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.score-label {
+    display: block;
+    font-size: 0.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    letter-spacing: 0.1em;
+}
+
+.score-value {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 10px var(--neon-yellow);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    .arcade-header {
+        margin-bottom: 15px;
+    }
+    
+    .score-display {
+        position: static;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+    
+    .sound-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .cabinet-screen-frame {
+        padding: 10px;
+    }
+    
+    .screen-bezel {
+        padding: 10px;
+    }
+    
+    .cabinet-controls {
+        padding: 15px 10px;
+    }
+    
+    .joystick-base {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .arcade-button {
+        width: 40px;
+        height: 40px;
+        font-size: 0.6rem;
+    }
+}
+
+/* ========================================
+   GAME-SPECIFIC STYLES
+   ======================================== */
+
+/* Snake Game */
+.snake-food {
+    animation: foodPulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes foodPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+/* Tetris Game */
+.tetris-flash {
+    animation: tetrisFlash 0.1s ease-in-out 3;
+}
+
+@keyframes tetrisFlash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Space Invaders */
+.invader-move {
+    animation: invaderBounce 0.5s ease-in-out;
+}
+
+@keyframes invaderBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+/* Breakout */
+.brick-destroy {
+    animation: brickExplode 0.2s ease-out forwards;
+}
+
+@keyframes brickExplode {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
