@@ -128,8 +128,8 @@ MIT License - feel free to use these projects as learning resources or starting 
 
 ## 🙋 Questions?
 
-- **YouTube**: [Your Channel Link]
-- **Twitter**: [@YourHandle]
+- **YouTube**: [@AIOriented](https://www.youtube.com/@AIOriented)
+- **Twitter**: [@chongdashu](https://www.x.com/chongdashu)
 - **Website**: [BuilderPack.ai](https://builderpack.ai/?utm_source=github&utm_medium=readme&utm_campaign=cursor_03)
 
 ---
